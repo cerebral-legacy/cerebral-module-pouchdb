@@ -8,7 +8,7 @@ export default function ({
   documentTypes = null
 } = {}) {
   return {
-    init({ controller, signals }) {
+    init({ signals }) {
 
       // PouchDB.debug.enable('*')
       // PouchDB.debug.disable('*')
@@ -31,7 +31,8 @@ export default function ({
         include_docs: true
       }).on('change', function (change) {
         if (!change.doc.type) {
-          return console.error('document type missing', change.doc);
+          console.error('document type missing', change.doc);
+          return;
         }
         if (Array.isArray(documentTypes) && !documentTypes.includes(change.doc.type)) {
           return;
