@@ -17,18 +17,16 @@ From your main.js
 // import your cerebral controller
 import controller from './controller';
 
-// import pouchdb cerebral service
+// import cerebral-pouchdb service
 import pouchdb form 'cerebral-pouchdb';
 
-// import you app modules
+// import your local modules
 import home from './modules/home';
 import notFound from './modules/notFound';
 
-// init the modules
-import controller from './controller';
-import setupModules from 'cerebral-modules';
-const chains = setupModules(controller, [
-  pouchdb({
+// prepare modules
+const modules = {
+  db: pouchdb({
     localDb: 'myappdb',
     remoteDb: 'http://localhost:3000/db/myappdb', // optional - syncs with remote db when provided
     statePath: 'data',                            // optional - defaults to [ 'data' ]
@@ -36,8 +34,10 @@ const chains = setupModules(controller, [
   }),
   home,
   notFound
-]);
+};
 
+// init the modules
+controller.extends(modules);
 ```
 
 ## Contribute

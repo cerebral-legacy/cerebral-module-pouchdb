@@ -1,5 +1,5 @@
 import PouchDB from 'pouchdb';
-import changed from './chains/changed';
+import changed from './signals/changed';
 
 export default function ({
   remoteDb = null,
@@ -8,8 +8,7 @@ export default function ({
   documentTypes = null
 } = {}) {
   return {
-    name: 'pouchdb_' + localDb,
-    init(controller) {
+    init({ controller, signals }) {
 
       // PouchDB.debug.enable('*')
       // PouchDB.debug.disable('*')
@@ -25,15 +24,6 @@ export default function ({
         }
       }
 
-      // add the local db to services
-      if (!controller.services.db) {
-        controller.services.db = {};
-      }
-      controller.services.db[localDb] = db.local;
-
-      // register the changed signal
-      controller.signal('pouchdb.' + localDb + 'Changed', changed(statePath));
-
       // get all local docs
       db.local.changes({
         since: 0,
@@ -41,13 +31,12 @@ export default function ({
         include_docs: true
       }).on('change', function (change) {
         if (!change.doc.type) {
-          console.error('document type missing', change.doc);
-          return;
+          return console.error('document type missing', change.doc);
         }
         if (Array.isArray(documentTypes) && !documentTypes.includes(change.doc.type)) {
           return;
         }
-        controller.signals.pouchdb[localDb + 'Changed'](change);
+        signals.changed(change);
       }).on('error', function (err) {
         console.error(localDb + ' db error', err);
       });
@@ -61,6 +50,14 @@ export default function ({
           console.error('db replication error', err);
         });
       }
-    }
+
+      return {
+        services: db.local
+      };
+    },
+    signals: {
+      changed: changed(statePath)
+    },
+    services: {}
   };
 }
