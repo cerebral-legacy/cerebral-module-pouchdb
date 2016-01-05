@@ -4,11 +4,11 @@
   "description": "A cerebral module for integrating the cerebral store with one or more pouch dbs",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint src test",
-    "dev": "parallelshell 'babel src --watch --out-dir lib' 'watch --wait=1 \"eslint src test && mocha --compilers js:babel/register --recursive --reporter dot\" src test'",
-    "prebuild": "npm run lint",
+    "lint": "eslint .",
+    "dev": "parallelshell 'babel src --watch --out-dir lib' 'watch --wait=1 \"eslint . && mocha --compilers js:babel/register --recursive --reporter dot\" src test'",
+    "prebuild": "eslint .",
     "build": "babel src --out-dir lib",
-    "pretest": "npm run lint",
+    "pretest": "eslint .",
     "test": "mocha --compilers js:babel/register --recursive"
   },
   "repository": {
