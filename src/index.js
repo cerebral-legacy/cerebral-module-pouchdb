@@ -1,5 +1,8 @@
 import PouchDB from 'pouchdb';
+import pouchAuth from 'pouchdb-authentication';
 import changed from './signals/changed';
+
+PouchDB.plugin(pouchAuth);
 
 export default function ({
   remoteDb = null,
@@ -20,7 +23,9 @@ export default function ({
       } else {
         db.local = new PouchDB(localDb);
         if (remoteDb) {
-          db.remote = new PouchDB(remoteDb);
+          db.remote = new PouchDB(remoteDb, {
+            skipSetup: true
+          });
         }
       }
 
@@ -53,7 +58,7 @@ export default function ({
       }
 
       return {
-        services: db.local
+        services: db
       };
     },
     signals: {

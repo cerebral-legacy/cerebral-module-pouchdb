@@ -1,6 +1,6 @@
 {
   "name": "cerebral-pouchdb",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A cerebral module for integrating the cerebral store with one or more pouch dbs",
   "main": "lib/index.js",
   "scripts": {
@@ -37,11 +37,13 @@
     "mocha": "^2.3.4",
     "parallelshell": "^2.0.0",
     "pouchdb": "^5.1.0",
+    "pouchdb-authentication": "^0.4.2",
     "watch": "^0.17.1"
   },
   "dependencies": {},
   "peerDependencies": {
     "cerebral": "^0.28.0",
-    "pouchdb": "^5.1.0"
+    "pouchdb": "^5.1.0",
+    "pouchdb-authentication": "^0.4.2"
   }
 }
