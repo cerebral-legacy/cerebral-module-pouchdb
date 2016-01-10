@@ -1,11 +1,11 @@
-# cerebral-pouchdb
+# cerebral-module-pouchdb
 
 A cerebral module for integrating the cerebral store with one or more pouch dbs.
 
 ## Install
 
 ```
-npm install cerebral-pouchdb
+npm install cerebral-module-pouchdb
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ From your main.js
 import controller from './controller'
 
 // import cerebral-pouchdb service
-import pouchdb form 'cerebral-pouchdb'
+import pouchdb form 'cerebral-module-pouchdb'
 
 // import your local modules
 import home from './modules/home'
