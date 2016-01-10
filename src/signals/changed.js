@@ -1,7 +1,5 @@
-import change from '../actions/change';
+import change from '../actions/change'
 
-export default function (statePath) {
-  return [
-    change(statePath)
-  ];
-}
+export default [
+  change
+]
