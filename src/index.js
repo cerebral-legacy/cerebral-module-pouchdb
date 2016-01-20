@@ -9,7 +9,13 @@ export default ({
   localDb,
   documentTypes = null
 } = {}) => {
-  return ({ signals, services }) => {
+  return (module) => {
+    module.state({})
+    // register signals
+    module.signals({
+      changed
+    })
+
     // PouchDB.debug.enable('*')
     // PouchDB.debug.disable('*')
 
@@ -27,6 +33,7 @@ export default ({
     }
 
     // get all local docs
+    const changedSignal = module.getSignals().changed
     db.local.changes({
       since: 0,
       live: true,
@@ -39,7 +46,7 @@ export default ({
       if (Array.isArray(documentTypes) && !documentTypes.includes(change.doc.type)) {
         return
       }
-      signals.changed(change)
+      changedSignal(change)
     }).on('error', function (err) {
       console.error(localDb + ' db error', err)
     })
@@ -54,10 +61,7 @@ export default ({
       })
     }
 
-    // register signals and services
-    signals({
-      changed
-    })
-    services(db)
+    // expose db via serivces
+    module.services(db)
   }
 }
