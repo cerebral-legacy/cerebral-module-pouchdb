@@ -1,6 +1,6 @@
 # cerebral-module-pouchdb
 
-A cerebral module for integrating the cerebral store with one or more pouch dbs.
+A cerebral module for integrating the cerebral store with one or more [pouchdb](http://pouchdb.com/).
 
 ## Install
 
@@ -14,29 +14,54 @@ npm install cerebral-module-pouchdb
 From your main.js
 
 ```js
-// import your cerebral controller
+// your cerebral controller
 import controller from './controller'
 
-// import cerebral-pouchdb service
 import pouchdb form 'cerebral-module-pouchdb'
+import other from './modules/other'
 
-// import your local modules
-import home from './modules/home'
-import notFound from './modules/notFound'
-
-// prepare modules
+// configure modules
 const modules = {
   db: pouchdb({
     localDb: 'myappdb',
     remoteDb: 'http://localhost:3000/db/myappdb', // optional - syncs with remote db when provided
     documentTypes: ['user', 'invoice']            // optional - defaults to all document types
   }),
-  home,
-  notFound
+  other
 }
 
 // init the modules
 controller.modules(modules)
+```
+
+All pouchdb documents will now be synchronised to the cerebral state under `/db/[type]/[id]`.
+Whilst your app can now read from this location, it should not write to the state directly,
+instead cerebral-module-pouchdb adds a service that your app can use from your actions:
+
+```js
+export default function save ({ input: { doc }, services: { db }, output }) {
+  // save the doc
+  db.local.put(doc)
+    .then(res => output.success(res))
+    .catch(err => output.error(err))
+}
+```
+
+## Authentication
+
+cerebral-module-pouchdb also includes [pouchdb-authentication](https://github.com/nolanlawson/pouchdb-authentication).
+You can use any of the authentication methods on the remote database.
+
+```js
+export default function save ({ input: { username, password }, services: { db }, output }) {
+  db.remote.login(username, password, (error, response) => {
+    if (error) {
+      output.error(error)
+    } else {
+      output.success(response)
+    }
+  })
+}
 ```
 
 ## Contribute
