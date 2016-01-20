@@ -41,6 +41,7 @@
     "parallelshell": "^2.0.0",
     "pouchdb": "^5.2.0",
     "pouchdb-authentication": "^0.4.2",
+    "snazzy": "^2.0.1",
     "standard": "^5.4.1",
     "watch": "^0.17.1"
   },
