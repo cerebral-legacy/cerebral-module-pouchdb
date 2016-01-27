@@ -23,9 +23,11 @@ import other from './modules/other'
 // configure modules
 const modules = {
   db: pouchdb({
-    localDb: 'myappdb',
-    remoteDb: 'http://localhost:3000/db/myappdb', // optional - syncs with remote db when provided
-    documentTypes: ['user', 'invoice']            // optional - defaults to all document types
+    rootPath: ['docs'],   // optional - defaults to store docs in the module state
+    readonly: false,      // optional - defaults to false will not sync client to server when true
+    localDb: 'myappdb',   // optional - local db will sync with state when provided
+    remoteDb: 'http://localhost/db/myappdb',  // optional - syncs with remote db when provided
+    documentTypes: ['user', 'invoice']        // optional - defaults to all document types
   }),
   other
 }
