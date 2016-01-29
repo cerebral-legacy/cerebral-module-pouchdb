@@ -1,6 +1,7 @@
 import PouchDB from 'pouchdb'
 import pouchAuth from 'pouchdb-authentication'
 import changed from './signals/changed'
+import init from './signals/init'
 
 PouchDB.plugin(pouchAuth)
 
@@ -16,7 +17,8 @@ export default ({
 
     // register signals
     module.signals({
-      changed
+      changed,
+      init
     })
 
     // PouchDB.debug.enable('*')
@@ -36,9 +38,22 @@ export default ({
     // get all local docs
     if (db.local) {
       const statePath = rootPath && typeof rootPath === 'string' ? rootPath.split('.') : rootPath
+      // get all docs already stored
+      const initSignal = module.getSignals().init
+      db.local.allDocs({
+        include_docs: true
+      }, function (err, response) {
+        if (err) {
+          console.error('failed to get all docs', err)
+          return
+        }
+        response.statePath = statePath
+        initSignal(response)
+      })
+      // watch for future docs/changes
       const changedSignal = module.getSignals().changed
       db.local.changes({
-        since: 0,
+        since: 'now',
         live: true,
         include_docs: true
       }).on('change', function (change) {
