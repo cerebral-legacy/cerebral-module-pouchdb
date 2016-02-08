@@ -1,7 +1,7 @@
 import PouchDB from 'pouchdb'
 import pouchAuth from 'pouchdb-authentication'
-import changed from './signals/changed'
-import init from './signals/init'
+import changed from './chains/changed'
+import init from './chains/init'
 
 PouchDB.plugin(pouchAuth)
 
