@@ -1,4 +1,4 @@
-export default function init ({ module, input: { statePath, rows }, state }) {
+export default function init ({ input: { statePath, rows }, state }) {
   const docs = rows.reduce((docs, row) => {
     const doc = row.doc
     if (!doc._deleted && doc.type) {
