@@ -37,7 +37,9 @@ export default ({
 
     // get all local docs
     if (db.local) {
-      const statePath = rootPath && typeof rootPath === 'string' ? rootPath.split('.') : rootPath
+      const statePath = !rootPath
+          ? module.name.split(',')
+          : typeof rootPath === 'string' ? rootPath.split('.') : rootPath
       // get all docs already stored
       const initSignal = module.getSignals().init
       db.local.allDocs({
