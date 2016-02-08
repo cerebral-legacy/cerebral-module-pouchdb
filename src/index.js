@@ -13,10 +13,10 @@ export default ({
   documentTypes = null
 } = {}) => {
   return (module) => {
-    module.state({})
+    module.addState({})
 
     // register signals
-    module.signals({
+    module.addSignals({
       changed,
       init
     })
@@ -91,6 +91,6 @@ export default ({
     }
 
     // expose db via serivces
-    module.services(db)
+    module.addServices(db)
   }
 }
