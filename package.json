@@ -7,7 +7,7 @@
     "lib"
   ],
   "scripts": {
-    "lint": "standard src/**/*.js test/**/*.js | snazzy",
+    "lint": "standard src/**/*.js test/**/*.js --verbose | snazzy",
     "start": "parallelshell 'babel src --watch --out-dir lib' 'watch --wait=1 \"npm run lint && mocha --compilers js:babel-core/register --recursive --reporter dot\" src test'",
     "prebuild": "npm run lint",
     "build": "rimraf lib && babel src --out-dir lib",
