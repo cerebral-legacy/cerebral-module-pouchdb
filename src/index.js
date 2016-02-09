@@ -28,6 +28,7 @@ export default ({
     const db = {}
     if (localDb) {
       db.local = new PouchDB(localDb)
+      db.local.setMaxListeners(20)
     }
     if (remoteDb) {
       db.remote = new PouchDB(remoteDb, {

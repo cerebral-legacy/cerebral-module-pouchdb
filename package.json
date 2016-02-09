@@ -1,6 +1,6 @@
 {
   "name": "cerebral-module-pouchdb",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A cerebral module for integrating the cerebral store with one or more pouch dbs",
   "main": "lib/index.js",
   "files": [
